@@ -36,3 +36,14 @@ body {
   border-radius: 15px;
   font-size: 0.7rem;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+footer {
+    margin-top: auto;
+}
