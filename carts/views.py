@@ -18,12 +18,15 @@ def cart_add(request, product_slug):
         else:
             Cart.objects.create(user=request.user, product=product, quantity=1) # Если карт нет, то мы создаем их
 
-        return redirect(request.META['HTTP_REFERER']) # С какой страницы пользователь попал, туда и возвращается
+    return redirect(request.META['HTTP_REFERER']) # С какой страницы пользователь попал, туда и возвращается
 
 
 def cart_change(request, prduct_slug):
     ...
 
 
-def cart_remove(request, prduct_slug):
-    ...
+def cart_remove(request, cart_id):
+    
+    cart = Cart.objects.get(id=cart_id)
+    cart.delete()
+    return redirect(request.META['HTTP_REFERER']) # С какой страницы пользователь попал, туда и возвращается
