@@ -1,11 +1,11 @@
 from django import template
 
 from carts.models import Cart
+from carts.utils import get_user_carts
 
 
 register = template.Library() # Да с БОЛЬШОЙ БУКВЫ, БОЛЬШИМ РЕГИСТРОМ НАДО ПИСАТЬ ПЕРВУЮ БУКВУ В СЛОВЕ "Library"
 
 @register.simple_tag()
-def user_cart(requset):
-    if requset.user.is_authenticated:
-        return Cart.objects.filter(user=requset.user) # Фильтруем по user, передаем объект пользователя для поиска
+def user_cart(request):
+    return get_user_carts(request)
