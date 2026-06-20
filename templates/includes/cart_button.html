@@ -1,7 +1,7 @@
 {% load static %}
 {% load carts_tags %}
 
-{% user_cart request as carts %} {% comment "Обращаемся к QuerySet" %}{% endcomment %}
+{% user_carts request as carts %} {% comment "Обращаемся к QuerySet" %}{% endcomment %}
 
 <div>
     <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
@@ -13,7 +13,7 @@
 </div>
 <!-- Разметка модального окна корзины -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+        aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
