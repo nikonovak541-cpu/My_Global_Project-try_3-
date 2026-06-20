@@ -23,6 +23,21 @@ def cart_add(request):
         else:
             Cart.objects.create(user=request.user, product=product, quantity=1) # Если карт нет, то мы создаем их
 
+# ------------Сессии пользователей без регистрации--------------------
+    else:
+        carts = Cart.objects.filter(
+            session_key=request.session.session_key, product=product)
+        
+        if carts.exists():
+            cart = carts.first()
+            if cart:
+                cart.quantity += 1
+                cart.save()
+
+        else: # Если нет ,то создаем корзину НОВУЮ для анонимного пользователя
+            Cart.objects.create(
+                session_key=request.session.session_key, product=product, quantity=1) # Привязка по сессионному ключу
+
 
     user_cart = get_user_carts(request)
     cart_items_html = render_to_string(

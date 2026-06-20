@@ -10,3 +10,5 @@ media/
 
 
 requirements.txt
+desktop.ini
+.gitignore
