@@ -3,6 +3,7 @@ from django import forms
 
 # ---------КАСТОМНЫЕ ФОРМЫ ( ПОПЫТКА 2) -----------#
 class CreateOrderForm(forms.Form):
+    
     first_name = forms.CharField()
     last_name = forms.CharField()
     phone_number = forms.CharField()
@@ -18,6 +19,7 @@ class CreateOrderForm(forms.Form):
             ("0", False),
             ("1", True),
             ],
+            required=False,
         )
 
 
