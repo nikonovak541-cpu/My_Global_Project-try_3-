@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from carts.admin import CartTabAdmin
+from orders.admin import OrderTabulareAdmin
 from users.models import User
 
 # admin.site.register(User)
@@ -11,4 +12,4 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ["username","first_name", "last_name", "email"]
 
 
-    inlines = [CartTabAdmin,] # Подвязали инлайновую форму наших корзин к каждому пользователю
+    inlines = [CartTabAdmin, OrderTabulareAdmin] # Подвязали инлайновую форму наших корзин к каждому пользователю
