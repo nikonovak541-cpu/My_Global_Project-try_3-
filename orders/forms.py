@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 
 
@@ -22,7 +24,17 @@ class CreateOrderForm(forms.Form):
             required=False,
         )
 
+    def clean_phone_number(self):
+        data = self.cleaned_data['phone_number']
 
+        if not data.isdigit(): # Если не из цифр состоит введеное пользователем
+            raise forms.ValidationError("Номер телефона должен содержать только цифры!")
+        
+        pattern = re.compile(r'^\d{10}$') # А вот тут регулярные выражение идет в ход (ПРЕПОДГОТОВИТЬ ШАБЛОН (НОМЕР ТЕЛЕФОНА ДОЛЖЕН СОСТОЯТЬ ИЗ 10-ТИ ЦИФР))
+        if not pattern.match(data): # Если не подходит под шаблон
+            raise forms.ValidationError("Неверный формат номера!")
+        
+        return data
 
 
 

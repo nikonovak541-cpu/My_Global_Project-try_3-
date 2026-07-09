@@ -10,8 +10,9 @@ from orders.models import Order, OrderItem
 
 
 def create_order(request):
-    form = CreateOrderForm(data=request.POST)
+    # ФОРМА СОЗДАЕТСЯ ВНУТРИ УСЛОВИЙ, А НЕ В НАЧАЛЕ (ДОЛГО СИДЕЛ ТУТ)
     if request.method == 'POST':
+        form = CreateOrderForm(data=request.POST)  # форма с данными от пользователя
         if form.is_valid():
             try:
                 with transaction.atomic():
@@ -55,20 +56,20 @@ def create_order(request):
                         return redirect('user:profile')
             except ValidationError as e:
                 messages.error(request, str(e))
-                return redirect('cart:order')
-        else:
-            initial = {
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-            }
-
-            form = CreateOrderForm(initial=initial)
+                
+                return redirect('orders:create_order') #редирект на страницу оформления
+        # Если форма невалидна, мы просто выходим из if и рендерим шаблон с этой же формой (с ошибками)
+    else:
+        # GET-запрос подставляем данные пользователя в форму
+        initial = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'phone_number': getattr(request.user, 'phone_number', ''),  # если поле есть
+        }
+        form = CreateOrderForm(initial=initial)
 
     context = {
         'title': 'Home - Оформление заказа',
         'form': form,
     }
     return render(request, 'orders/create_order.html', context=context)
-
-                        
-
