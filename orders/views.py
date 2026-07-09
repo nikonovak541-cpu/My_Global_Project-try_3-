@@ -7,8 +7,9 @@ from django.template import context
 from carts.models import Cart
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def create_order(request):
     # ФОРМА СОЗДАЕТСЯ ВНУТРИ УСЛОВИЙ, А НЕ В НАЧАЛЕ (ДОЛГО СИДЕЛ ТУТ)
     if request.method == 'POST':
@@ -71,5 +72,6 @@ def create_order(request):
     context = {
         'title': 'Home - Оформление заказа',
         'form': form,
+        'order': True,
     }
     return render(request, 'orders/create_order.html', context=context)
